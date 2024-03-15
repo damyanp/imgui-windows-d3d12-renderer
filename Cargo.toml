@@ -10,6 +10,7 @@ license = "MIT OR Apache-2.0"
 categories = ["gui", "rendering"]
 keywords = ["d3d12", "imgui", "windows-rs"]
 readme = "README.md"
+exclude = [".vscode"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
@@ -36,3 +37,4 @@ winit = "*"
 
 [package.metadata.docs.rs]
 default-target = "x86_64-pc-windows-msvc"
+
