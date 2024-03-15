@@ -15,7 +15,7 @@ exclude = [".vscode"]
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-imgui = "*"
+imgui = "0.11.0"
 offset = "0.1.*"
 
 
