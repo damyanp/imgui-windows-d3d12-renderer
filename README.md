@@ -3,6 +3,10 @@
 D3D12 renderer for [imgui-rs](https://github.com/Gekkio/imgui-rs) implemented
 using [windows-rs](https://github.com/microsoft/windows-rs).
 
+[![ci](https://github.com/damyanp/imgui-windows-d3d12-renderer/actions/workflows/ci.yml/badge.svg)](https://github.com/damyanp/imgui-windows-d3d12-renderer/actions/workflows/ci.yml)
+[![Latest release on
+crates.io](https://img.shields.io/crates/v/imgui-windows-d3d12-renderer.svg)](https://crates.io/crates/imgui)
+
 ## Usage
 
 See [example](examples/hello_world.rs).
