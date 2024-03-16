@@ -7,6 +7,8 @@ using [windows-rs](https://github.com/microsoft/windows-rs).
 [![Latest release on
 crates.io](https://img.shields.io/crates/v/imgui-windows-d3d12-renderer.svg)](https://crates.io/crates/imgui)
 
+Looking for a rusty-d3d12 based renderer?  Check out [imgui-d3d12-renderer](https://github.com/curldivergence/imgui-d3d12-renderer).
+
 ## Usage
 
 See [example](examples/hello_world.rs).
