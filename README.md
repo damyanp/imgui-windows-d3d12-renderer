@@ -5,7 +5,7 @@ using [windows-rs](https://github.com/microsoft/windows-rs).
 
 [![ci](https://github.com/damyanp/imgui-windows-d3d12-renderer/actions/workflows/ci.yml/badge.svg)](https://github.com/damyanp/imgui-windows-d3d12-renderer/actions/workflows/ci.yml)
 [![Latest release on
-crates.io](https://img.shields.io/crates/v/imgui-windows-d3d12-renderer.svg)](https://crates.io/crates/imgui)
+crates.io](https://img.shields.io/crates/v/imgui-windows-d3d12-renderer.svg)](https://crates.io/crates/imgui-windows-d3d12-renderer)
 
 Looking for a rusty-d3d12 based renderer?  Check out [imgui-d3d12-renderer](https://github.com/curldivergence/imgui-d3d12-renderer).
 
