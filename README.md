@@ -26,3 +26,11 @@ Licensed under either of
 - MIT license ([LICENSE-MIT](LICENSE-MIT) or https://opensource.org/licenses/MIT)
 
 at your option.
+
+## Changelog
+
+- 0.1.1
+  - fix frame_count (that resulted in index buffers in use being destroyed)
+  - add debug names for resources to aid debugging
+- 0.1.0
+  - initial release

@@ -15,7 +15,7 @@ use imgui::{
 use offset::offset_of;
 //
 use windows::{
-    core::{s, Interface, Result, PCSTR},
+    core::{s, w, Interface, Result, HSTRING, PCSTR},
     Win32::{
         Foundation::{CloseHandle, FALSE, RECT, TRUE},
         Graphics::{
@@ -478,6 +478,7 @@ impl DeviceObjects {
                 &mut texture,
             )?;
             let texture = texture.unwrap();
+            texture.SetName(w!("imgui font texture")).unwrap();
 
             // Create the upload buffer resource
             let upload_pitch =
@@ -685,10 +686,10 @@ impl Renderer {
         }
 
         if let Some(device_objects) = self.device_objects.as_mut() {
-            let frame_index = self.frame_index.wrapping_add(1);
+            self.frame_index = self.frame_index.wrapping_add(1);
             device_objects.render_draw_data(
                 &self.device,
-                frame_index % self.num_frames_in_flight,
+                self.frame_index % self.num_frames_in_flight,
                 draw_data,
                 graphics_command_list,
             );
@@ -738,6 +739,14 @@ impl RenderBuffers {
                 )
                 .unwrap(),
             );
+
+            static mut VBCOUNT: usize = 0;
+            self.vertex_buffer
+                .as_mut()
+                .unwrap()
+                .SetName(&HSTRING::from(format!("imgui VB {}", VBCOUNT)))
+                .unwrap();
+            VBCOUNT += 1;
         }
 
         if self.index_buffer.is_none()
@@ -752,6 +761,14 @@ impl RenderBuffers {
                 )
                 .unwrap(),
             );
+
+            static mut IBCOUNT: usize = 0;
+            self.vertex_buffer
+                .as_mut()
+                .unwrap()
+                .SetName(&HSTRING::from(format!("imgui IB {}", IBCOUNT)))
+                .unwrap();
+            IBCOUNT += 1;
         }
 
         // Upload vertex/index data into a single contiguous GPU buffer

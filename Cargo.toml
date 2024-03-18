@@ -2,7 +2,7 @@
 name = "imgui-windows-d3d12-renderer"
 authors = ["Damyan Pepper <damyanp@gmail.com>"]
 description = "D3D12 renderer for Dear ImGUI based on windows-rs bindings"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 homepage = "https://github.com/damyanp/imgui-windows-d3d12-renderer"
 repository = "https://github.com/damyanp/imgui-windows-d3d12-renderer"
