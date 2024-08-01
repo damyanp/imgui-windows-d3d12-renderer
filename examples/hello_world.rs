@@ -1,4 +1,3 @@
-use std::error::Error;
 use std::time::Instant;
 
 use imgui::{FontConfig, FontSource};
@@ -34,15 +33,14 @@ use windows::Win32::{
     },
 };
 use winit::dpi::LogicalSize;
-use winit::platform::windows::WindowExtWindows;
 use winit::{
     event::{Event, WindowEvent},
     event_loop::EventLoop,
     window::{Window, WindowBuilder},
 };
 
-fn main() -> Result<(), Box<dyn Error>> {
-    let event_loop = EventLoop::new();
+fn main() {
+    let event_loop = EventLoop::new().unwrap();
 
     let builder = WindowBuilder::new()
         .with_inner_size(LogicalSize {
@@ -50,20 +48,18 @@ fn main() -> Result<(), Box<dyn Error>> {
             height: 768,
         })
         .with_resizable(false);
-    let window = builder.build(&event_loop)?;
+    let window = builder.build(&event_loop).unwrap();
 
-    let mut hello_world = HelloWorld::new()?;
-    hello_world.bind_to_window(&window)?;
+    let mut hello_world = HelloWorld::new().unwrap();
+    hello_world.bind_to_window(&window).unwrap();
 
-    event_loop.run(move |event, _, control_flow| match event {
+    event_loop.run(move |event, event_loop_window_target| match event {
         Event::WindowEvent {
             event: WindowEvent::CloseRequested,
             ..
-        } => {
-            control_flow.set_exit();
-        }
+        } => event_loop_window_target.exit(),
         event => hello_world.handle_event(&event, &window),
-    });
+    }).unwrap();
 }
 
 struct HelloWorld {
@@ -109,7 +105,7 @@ impl HelloWorld {
                 ..Default::default()
             };
 
-            let hwnd = HWND(window.hwnd());
+            let hwnd = HWND(Into::<u64>::into(window.id()) as isize);
 
             let swap_chain: IDXGISwapChain3 = self
                 .dxgi_factory
@@ -254,17 +250,17 @@ impl HelloWorld {
                     io.update_delta_time(now - self.last_frame);
                     self.last_frame = now;
                 }
-                Event::MainEventsCleared => {
+                Event::AboutToWait => {
                     resources
                         .winit_platform
                         .prepare_frame(io, window)
                         .expect("Failed to start frame");
                     window.request_redraw();
                 }
-                Event::RedrawRequested(_) => {
-                    // redraw
-                    self.draw(window);
-                }
+                Event::WindowEvent {
+                    event: WindowEvent::RedrawRequested,
+                    ..
+                } => self.draw(window),
                 Event::WindowEvent {
                     event: WindowEvent::Resized(_),
                     ..

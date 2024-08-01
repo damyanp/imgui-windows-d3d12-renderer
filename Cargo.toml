@@ -2,7 +2,7 @@
 name = "imgui-windows-d3d12-renderer"
 authors = ["Damyan Pepper <damyanp@gmail.com>"]
 description = "D3D12 renderer for Dear ImGUI based on windows-rs bindings"
-version = "0.1.1"
+version = "0.1.2"
 edition = "2021"
 homepage = "https://github.com/damyanp/imgui-windows-d3d12-renderer"
 repository = "https://github.com/damyanp/imgui-windows-d3d12-renderer"
@@ -15,7 +15,8 @@ exclude = [".vscode"]
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-imgui = "0.11.0"
+imgui = { git = "https://github.com/imgui-rs/imgui-rs.git", ref = "67f7f11363e62f09aa0e1288a17800e505860486" }
+imgui-sys = { git = "https://github.com/imgui-rs/imgui-rs.git", ref = "67f7f11363e62f09aa0e1288a17800e505860486" }
 offset = "0.1.*"
 
 
@@ -32,9 +33,8 @@ features = [
 
 [dev-dependencies]
 array-init = "2.0.0"
-imgui-winit-support = "0.11.0"
-winit = "0.27.5"
+imgui-winit-support = { git = "https://github.com/imgui-rs/imgui-rs.git", ref = "67f7f11363e62f09aa0e1288a17800e505860486" }
+winit = "^0.29.3"
 
 [package.metadata.docs.rs]
 default-target = "x86_64-pc-windows-msvc"
-
