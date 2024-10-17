@@ -53,13 +53,15 @@ fn main() {
     let mut hello_world = HelloWorld::new().unwrap();
     hello_world.bind_to_window(&window).unwrap();
 
-    event_loop.run(move |event, event_loop_window_target| match event {
-        Event::WindowEvent {
-            event: WindowEvent::CloseRequested,
-            ..
-        } => event_loop_window_target.exit(),
-        event => hello_world.handle_event(&event, &window),
-    }).unwrap();
+    event_loop
+        .run(move |event, event_loop_window_target| match event {
+            Event::WindowEvent {
+                event: WindowEvent::CloseRequested,
+                ..
+            } => event_loop_window_target.exit(),
+            event => hello_world.handle_event(&event, &window),
+        })
+        .unwrap();
 }
 
 struct HelloWorld {
