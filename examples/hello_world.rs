@@ -12,7 +12,7 @@ use windows::Win32::Graphics::Direct3D12::{
     D3D12_RESOURCE_STATES, D3D12_RESOURCE_STATE_PRESENT, D3D12_RESOURCE_STATE_RENDER_TARGET,
     D3D12_RESOURCE_TRANSITION_BARRIER,
 };
-use windows::Win32::Graphics::Dxgi::DXGI_MWA_NO_ALT_ENTER;
+use windows::Win32::Graphics::Dxgi::{DXGI_MWA_NO_ALT_ENTER, DXGI_PRESENT};
 use windows::Win32::System::Threading::{CreateEventA, WaitForSingleObject, INFINITE};
 use windows::Win32::{
     Foundation::{HANDLE, HWND, RECT},
@@ -107,7 +107,7 @@ impl HelloWorld {
                 ..Default::default()
             };
 
-            let hwnd = HWND(Into::<u64>::into(window.id()) as isize);
+            let hwnd = HWND(std::mem::transmute(window.id()));
 
             let swap_chain: IDXGISwapChain3 = self
                 .dxgi_factory
@@ -289,7 +289,9 @@ impl HelloWorld {
             unsafe { resources.command_queue.ExecuteCommandLists(&[command_list]) };
 
             // Present the frame.
-            unsafe { resources.swap_chain.Present(1, 0) }.ok().unwrap();
+            unsafe { resources.swap_chain.Present(1, DXGI_PRESENT(0)) }
+                .ok()
+                .unwrap();
 
             wait_for_previous_frame(resources);
         }
@@ -415,8 +417,7 @@ fn get_hardware_adapter(factory: &IDXGIFactory4) -> windows::core::Result<IDXGIA
     for i in 0.. {
         let adapter = unsafe { factory.EnumAdapters1(i)? };
 
-        let mut desc = Default::default();
-        unsafe { adapter.GetDesc1(&mut desc)? };
+        let desc = unsafe { adapter.GetDesc1()? };
 
         if (DXGI_ADAPTER_FLAG(desc.Flags as i32) & DXGI_ADAPTER_FLAG_SOFTWARE)
             != DXGI_ADAPTER_FLAG_NONE
