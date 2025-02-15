@@ -94,7 +94,7 @@ struct RenderBuffers {
     index_buffer_size: usize,
     vertex_buffer_size: usize,
     vbcount: usize,
-    ibcount: usize
+    ibcount: usize,
 }
 
 impl Renderer {
