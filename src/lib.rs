@@ -93,6 +93,8 @@ struct RenderBuffers {
     vertex_buffer: Option<ID3D12Resource>,
     index_buffer_size: usize,
     vertex_buffer_size: usize,
+    vbcount: usize,
+    ibcount: usize
 }
 
 impl Renderer {
@@ -740,13 +742,12 @@ impl RenderBuffers {
                 .unwrap(),
             );
 
-            static mut VBCOUNT: usize = 0;
             self.vertex_buffer
                 .as_mut()
                 .unwrap()
-                .SetName(&HSTRING::from(format!("imgui VB {}", VBCOUNT)))
+                .SetName(&HSTRING::from(format!("imgui VB {}", self.vbcount)))
                 .unwrap();
-            VBCOUNT += 1;
+            self.vbcount += 1;
         }
 
         if self.index_buffer.is_none()
@@ -762,13 +763,12 @@ impl RenderBuffers {
                 .unwrap(),
             );
 
-            static mut IBCOUNT: usize = 0;
             self.vertex_buffer
                 .as_mut()
                 .unwrap()
-                .SetName(&HSTRING::from(format!("imgui IB {}", IBCOUNT)))
+                .SetName(&HSTRING::from(format!("imgui IB {}", self.ibcount)))
                 .unwrap();
-            IBCOUNT += 1;
+            self.ibcount += 1;
         }
 
         // Upload vertex/index data into a single contiguous GPU buffer

@@ -1,3 +1,4 @@
+use std::ffi::c_void;
 use std::time::Instant;
 
 use imgui::{FontConfig, FontSource};
@@ -33,6 +34,7 @@ use windows::Win32::{
     },
 };
 use winit::dpi::LogicalSize;
+use winit::window::WindowId;
 use winit::{
     event::{Event, WindowEvent},
     event_loop::EventLoop,
@@ -107,7 +109,7 @@ impl HelloWorld {
                 ..Default::default()
             };
 
-            let hwnd = HWND(std::mem::transmute(window.id()));
+            let hwnd = HWND(std::mem::transmute::<WindowId, *mut c_void>(window.id()));
 
             let swap_chain: IDXGISwapChain3 = self
                 .dxgi_factory
